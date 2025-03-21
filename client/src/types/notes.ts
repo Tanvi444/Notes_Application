@@ -6,7 +6,7 @@ export type Note = {
   _id: string;
   user: string;
   title: string;
-  description: string | null;
+  description: string;
   tags: Array<string>;
   isPinned: boolean;
   updatedOn: string;

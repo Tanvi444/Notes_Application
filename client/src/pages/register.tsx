@@ -7,15 +7,15 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { registerFormSchema } from "@/lib/zod";
+import { RegisterFormSchema } from "@/lib/zod";
 import { registerUser } from "@/services/user";
 import { useAuthProvider } from "@/context/auth";
 
 export const Register: React.FC = () => {
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof registerFormSchema>>({
-    resolver: zodResolver(registerFormSchema),
+  const form = useForm<z.infer<typeof RegisterFormSchema>>({
+    resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -25,7 +25,7 @@ export const Register: React.FC = () => {
   });
   const { setAccessToken } = useAuthProvider();
 
-  const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof RegisterFormSchema>) => {
     if (isRegistering) return;
     setIsRegistering(true);
 
@@ -38,6 +38,7 @@ export const Register: React.FC = () => {
 
     const accessToken = response.data?.accessToken ?? null;
     setAccessToken(accessToken);
+    form.clearErrors();
     form.reset();
     setIsRegistering(false);
   };

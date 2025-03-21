@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginFormSchema } from "@/lib/zod";
+import { LoginFormSchema } from "@/lib/zod";
 import { loginUser } from "@/services/user";
 import toast from "react-hot-toast";
 import { useAuthProvider } from "@/context/auth";
@@ -14,8 +14,8 @@ import { useAuthProvider } from "@/context/auth";
 export const Login: React.FC = () => {
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
   });
   const { setAccessToken } = useAuthProvider();
 
-  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof LoginFormSchema>) => {
     if (isLoggingIn) return;
     setIsLoggingIn(true);
 
@@ -36,6 +36,7 @@ export const Login: React.FC = () => {
 
     const accessToken = response.data?.accessToken ?? null;
     setAccessToken(accessToken);
+    form.clearErrors();
     form.reset();
     setIsLoggingIn(false);
   };

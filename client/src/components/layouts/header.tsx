@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { UserAccount } from "../auth";
 import { SearchModal, ThemeToggle } from "../header";
+import { Dialog } from "../ui/dialog";
+import { AddNoteModal } from "../notes";
 
 export const Header: React.FC = () => {
   const [searchCommandOpen, setSearchCommandOpen] = useState<boolean>(false);
+  const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -42,12 +45,18 @@ export const Header: React.FC = () => {
               </kbd>
             </Button>
             <div className="flex items-center gap-2">
+              <Button variant="ghost" onClick={() => setAddDialogOpen(true)} className="p-0 px-0 py-0 h-auto mr-2">
+                + Create Note
+              </Button>
               <ThemeToggle />
               <UserAccount />
             </div>
           </div>
         </div>
       </header>
+      <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+        <AddNoteModal type="add" setDialogOpen={setAddDialogOpen} />
+      </Dialog>
     </React.Fragment>
   );
 };

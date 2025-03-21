@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const registerFormSchema = z
+export const RegisterFormSchema = z
   .object({
     name: z
       .string()
@@ -31,7 +31,7 @@ export const registerFormSchema = z
     path: ["confirmPassword"],
   });
 
-export const loginFormSchema = z.object({
+export const LoginFormSchema = z.object({
   email: z.string().trim().email("Please enter a valid email address."),
   password: z
     .string()
@@ -42,4 +42,20 @@ export const loginFormSchema = z.object({
     .max(16, {
       message: "Password must be at most 16 characters.",
     }),
+});
+
+export const CreateNoteSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(3, {
+      message: "Title must be at least 3 characters.",
+    })
+    .max(50, {
+      message: "Title must be at most 50 characters.",
+    }),
+  description: z.string().trim().min(5, {
+    message: "Description must be at least 5 characters.",
+  }),
+  tags: z.array(z.string()),
 });
